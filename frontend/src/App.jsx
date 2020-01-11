@@ -7,37 +7,64 @@ import GameMessage from './Components/GameMessage';
 import Points from './Components/Points';
 
 function App() {
-  const [points, setPoints] = useState(20);
-  const [response, setResponse] = useState(null);
+  const [id, setId] = useState(null);
+  const [points, setPoints] = useState(null);
+  const [message, setMessage] = useState(null);
+
   useEffect(() => {
-    const fetchPoints = async () => {
-      try {
-        const newPoints = await pointsService.getPoints(1);
-        setPoints(newPoints);
-      } catch (e) {
-        window.alert('Failed to fetch points!');
+    const fetchId = async () => {
+      const idFromStorage = localStorage.getItem('id');
+      if (idFromStorage) {
+        setId(idFromStorage.toString());
+      } else {
+        try {
+          const response = await pointsService.createPoints();
+          setId(response.id);
+          localStorage.setItem('id', response.id);
+        } catch (e) {
+          console.log(e);
+          window.alert('Failed to create new game!');
+        }
       }
     };
 
-    fetchPoints();
+    fetchId();
   }, []);
 
-  const handlePlayClick = () => {
-    const result = gameService.play(1);
-    setResponse(result);
+  useEffect(() => {
+    if (id) {
+      const fetchPoints = async () => {
+        try {
+          const newPoints = await pointsService.getPoints(id);
+          setPoints(newPoints.amount);
+        } catch (e) {
+          console.log(e);
+          window.alert('Failed to fetch points!');
+        }
+      };
+
+      fetchPoints();
+    }
+  }, [id]);
+
+  const handlePlayClick = async () => {
+    const result = await gameService.play(id);
+    setMessage(result);
     setPoints(points - 1 + result.win);
   };
 
-  const handleRestartClick = () => {
-    gameService.restart(1);
+  const handleRestartClick = async () => {
+    const response = await pointsService.createPoints();
     setPoints(20);
+    localStorage.setItem('id', response.id);
+    setId(response.id);
   };
 
   return (
     <div className="App">
       <Button text="Click me!" handleClick={handlePlayClick} disabled={points < 1} visible />
       <Points points={points} />
-      <GameMessage response={response} />
+      <GameMessage message={message} />
       <Button text="Restart" handleClick={handleRestartClick} disabled={false} visible={points < 1} />
     </div>
   );

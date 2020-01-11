@@ -1,8 +1,8 @@
 import React from 'react';
 
-const GameMessage = ({ response }) => {
-  if (response) {
-    const msg = `Sait ${response.win} pistettä, seuraavaan voittoon ${response.untillNext} painallusta!`;
+const GameMessage = ({ message }) => {
+  if (message) {
+    const msg = `Sait ${message.win} pistettä, seuraavaan voittoon ${message.untillNext} painallusta!`;
     return (
       <div>
         {msg}

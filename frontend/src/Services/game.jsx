@@ -1,9 +1,13 @@
-const play = (id) => {
-  return { win: 0, untillNext: 10 }
-}
+import axios from 'axios';
 
-const restart = (id) => {
-  return { msg: 'Points reset' }
-}
+const baseUrl = 'http://localhost:8000';
 
-export default { play, restart };
+const play = async (id) => {
+  const response = await axios.post(`${baseUrl}/game/play`, {
+    id,
+  });
+
+  return response.data;
+};
+
+export default { play };
