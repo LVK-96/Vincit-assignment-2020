@@ -12,23 +12,10 @@ function App() {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    const fetchId = async () => {
-      const idFromStorage = localStorage.getItem('id');
-      if (idFromStorage) {
-        setId(idFromStorage.toString());
-      } else {
-        try {
-          const response = await pointsService.createPoints();
-          setId(response.id);
-          localStorage.setItem('id', response.id);
-        } catch (e) {
-          console.log(e);
-          window.alert('Failed to create new game!');
-        }
-      }
-    };
-
-    fetchId();
+    const idFromStorage = localStorage.getItem('id');
+    if (idFromStorage) {
+      setId(idFromStorage.toString());
+    }
   }, []);
 
   useEffect(() => {
@@ -38,7 +25,6 @@ function App() {
           const newPoints = await pointsService.getPoints(id);
           setPoints(newPoints.amount);
         } catch (e) {
-          console.log(e);
           window.alert('Failed to fetch points!');
         }
       };
@@ -48,24 +34,53 @@ function App() {
   }, [id, points]);
 
   const handlePlayClick = async () => {
-    const result = await gameService.play(id);
-    setMessage(result);
-    setPoints(points - 1 + result.win);
+    try {
+      const result = await gameService.play(id);
+      setMessage(result);
+      setPoints(points - 1 + result.win);
+    } catch (e) {
+      window.alert('Failed to play game!');
+    }
   };
 
   const handleRestartClick = async () => {
-    const response = await gameService.restart(id);
-    setPoints(20);
-    localStorage.setItem('id', response.id);
-    setId(response.id);
+    try {
+      const response = await gameService.restart(id);
+      localStorage.setItem('id', response.id);
+      setPoints(response.amount);
+      setId(response.id);
+    } catch (e) {
+      console.log(e);
+      window.alert('Failed to restart game!');
+    }
   };
+
+  const handleNewGameClick = async () => {
+    try {
+      const response = await pointsService.createPoints();
+      localStorage.setItem('id', response.id);
+      setPoints(response.amount);
+      setId(response.id);
+    } catch (e) {
+      window.alert('Failed to start game!');
+    }
+  };
+
+  const hasGame = !!id && (points !== null);
+  if (hasGame) {
+    return (
+      <div className="App">
+        <Button text="Click me!" handleClick={handlePlayClick} disabled={points < 1} visible />
+        <Points points={points} />
+        <GameMessage message={message} />
+        <Button text="Restart" handleClick={handleRestartClick} disabled={false} visible={points < 1} />
+      </div>
+    );
+  }
 
   return (
     <div className="App">
-      <Button text="Click me!" handleClick={handlePlayClick} disabled={points < 1} visible />
-      <Points points={points} />
-      <GameMessage message={message} />
-      <Button text="Restart" handleClick={handleRestartClick} disabled={false} visible={points < 1} />
+      <Button text="New game!" handleClick={handleNewGameClick} disabled={false} visible />
     </div>
   );
 }
