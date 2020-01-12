@@ -10,4 +10,12 @@ const play = async (id) => {
   return response.data;
 };
 
-export default { play };
+const restart = async (id) => {
+  const response = await axios.post(`${baseUrl}/game/restart`, {
+    id,
+  });
+
+  return response.data;
+};
+
+export default { play, restart };

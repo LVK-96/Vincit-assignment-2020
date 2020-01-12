@@ -32,7 +32,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (id) {
+    if (id && points === null) {
       const fetchPoints = async () => {
         try {
           const newPoints = await pointsService.getPoints(id);
@@ -45,7 +45,7 @@ function App() {
 
       fetchPoints();
     }
-  }, [id]);
+  }, [id, points]);
 
   const handlePlayClick = async () => {
     const result = await gameService.play(id);
@@ -54,7 +54,7 @@ function App() {
   };
 
   const handleRestartClick = async () => {
-    const response = await pointsService.createPoints();
+    const response = await gameService.restart(id);
     setPoints(20);
     localStorage.setItem('id', response.id);
     setId(response.id);
