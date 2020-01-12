@@ -15,11 +15,9 @@ pointsRouter.get('/:id', async (request, response, next) => {
 pointsRouter.post('/', async (request, response, next) => {
   console.log('POST points');
   try {
-    const points = new Points({
-      amount: 20,
-    });
-    points.save();
-    response.json(points.toJSON());
+    const points = new Points({ amount: 20 });
+    const savedPoints = await points.save();
+    response.json(savedPoints.toJSON());
   } catch (e) {
     console.log(e);
     next(e);

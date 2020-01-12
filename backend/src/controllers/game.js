@@ -7,23 +7,24 @@ gameRouter.post('/play', async (request, response, next) => {
   try {
     const { body } = request;
     console.log('Play', body.id, state);
-    state += 1;
+    let tmpState = state + 1;
     let reward;
-    if (state % 500 === 0) {
+    if (tmpState % 500 === 0) {
       reward = 250;
-    } else if (state % 100 === 0) {
+    } else if (tmpState % 100 === 0) {
       reward = 40;
-    } else if (state % 10 === 0) {
+    } else if (tmpState % 10 === 0) {
       reward = 5;
     } else {
       reward = 0;
     }
 
-    state %= 500;
+    tmpState %= 500;
     const points = await Points.findById(body.id);
     const newAmount = { amount: points.amount - 1 + reward };
     await Points.findByIdAndUpdate(body.id, newAmount, { new: true });
-    response.json({ win: reward, untillNext: 10 - (state % 10) });
+    response.json({ win: reward, untillNext: 10 - (tmpState % 10) });
+    state = tmpState;
   } catch (e) {
     console.log(e);
     next(e);
@@ -35,11 +36,9 @@ gameRouter.post('/restart', async (request, response, next) => {
     const { body } = request;
     console.log('Restart', body.id);
     await Points.findByIdAndDelete(body.id);
-    const points = new Points({
-      amount: 20,
-    });
-    points.save();
-    response.json(points.toJSON());
+    const points = new Points({ amount: 20 });
+    const savedPoints = await points.save();
+    response.json(savedPoints.toJSON());
   } catch (e) {
     next(e);
   }
