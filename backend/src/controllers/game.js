@@ -30,4 +30,19 @@ gameRouter.post('/play', async (request, response, next) => {
   }
 });
 
+gameRouter.post('/restart', async (request, response, next) => {
+  try {
+    const { body } = request;
+    console.log('Restart', body.id);
+    await Points.findByIdAndDelete(body.id);
+    const points = new Points({
+      amount: 20,
+    });
+    points.save();
+    response.json(points.toJSON());
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = gameRouter;
