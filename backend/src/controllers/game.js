@@ -26,7 +26,6 @@ gameRouter.post('/play', async (request, response, next) => {
     response.json({ win: reward, untillNext: 10 - (tmpState % 10) });
     state = tmpState;
   } catch (e) {
-    console.log(e);
     next(e);
   }
 });

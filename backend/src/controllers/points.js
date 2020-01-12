@@ -7,7 +7,6 @@ pointsRouter.get('/:id', async (request, response, next) => {
     const points = await Points.findById(request.params.id);
     response.json(points.toJSON());
   } catch (e) {
-    console.log(e);
     next(e);
   }
 });
@@ -19,7 +18,6 @@ pointsRouter.post('/', async (request, response, next) => {
     const savedPoints = await points.save();
     response.json(savedPoints.toJSON());
   } catch (e) {
-    console.log(e);
     next(e);
   }
 });

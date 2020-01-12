@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const middleware = require('./utils/middleware');
 const config = require('./utils/config');
 const pointsRouter = require('./controllers/points');
 const gameRouter = require('./controllers/game');
@@ -13,5 +14,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/points', pointsRouter);
 app.use('/game', gameRouter);
+app.use(middleware.errorHandler);
 
 module.exports = app;
