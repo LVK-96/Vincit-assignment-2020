@@ -11,8 +11,8 @@ const OnGoingGameView = ({
   const handlePlayClick = async () => {
     try {
       const result = await gameService.play(id);
-      setMessage(result);
       setPoints(points - 1 + result.win);
+      setMessage(result);
     } catch (e) {
       window.alert('Failed to play game!');
     }
@@ -22,6 +22,7 @@ const OnGoingGameView = ({
     try {
       const response = await gameService.restart(id);
       localStorage.setItem('id', response.id);
+      setMessage(null);
       setPoints(response.amount);
       setId(response.id);
     } catch (e) {

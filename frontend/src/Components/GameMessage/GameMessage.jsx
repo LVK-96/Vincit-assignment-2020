@@ -1,16 +1,12 @@
 import React from 'react';
 
 const GameMessage = ({ message }) => {
-  if (message) {
-    const msg = `Sait ${message.win} pistettä, seuraavaan voittoon ${message.untillNext} painallusta!`;
-    return (
-      <div>
-        {msg}
-      </div>
-    );
-  }
-
-  return null;
+  const msg = message !== null ? `Sait ${message.win} pistettä, seuraavaan voittoon ${message.untillNext} painallusta!` : '';
+  return (
+    <div>
+      {msg}
+    </div>
+  );
 };
 
 export default GameMessage;

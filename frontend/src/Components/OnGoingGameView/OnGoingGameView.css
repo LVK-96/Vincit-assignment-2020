@@ -9,7 +9,8 @@
 
 .messageContainer {
   font-size: large;
-  margin: 20px
+  margin: 20px;
+  height: 30px;
 }
 
 .gameContainer {
