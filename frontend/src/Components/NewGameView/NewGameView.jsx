@@ -1,6 +1,7 @@
 import React from 'react';
 import pointsService from '../../Services/points';
 import Button from '../Button';
+import './NewGameView.css';
 
 const NewGameView = ({ setPoints, setId }) => {
   const handleNewGameClick = async () => {
@@ -15,9 +16,11 @@ const NewGameView = ({ setPoints, setId }) => {
   };
 
   return (
-    <div>
-      <Button text="New game!" handleClick={handleNewGameClick} disabled={false} visible />
-    </div>
+    <>
+      <div className="buttonContainer">
+        <Button className="newGameButton" text="New game" handleClick={handleNewGameClick} disabled={false} visible />
+      </div>
+    </>
   );
 };
 

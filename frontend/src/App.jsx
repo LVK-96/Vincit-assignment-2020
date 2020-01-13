@@ -47,7 +47,7 @@ function App() {
     }
 
     return (
-      <div className="App">
+      <div className="newGameContainer">
         <NewGameView setPoints={setPoints} setId={setId} />
       </div>
     );

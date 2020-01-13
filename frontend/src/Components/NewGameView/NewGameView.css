@@ -1,0 +1,18 @@
+.newGameContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.buttonContainer {
+  position: absolute;
+  top: 50%;
+  align-self: center;
+}
+
+.newGameButton {
+  background-color: red;
+  color: white;
+  font-size: xxx-large;
+  padding: 20px;
+}
