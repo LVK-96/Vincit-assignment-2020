@@ -12,7 +12,6 @@ function App() {
   useEffect(() => {
     const idFromStorage = localStorage.getItem('id');
     if (idFromStorage) {
-      setId(idFromStorage.toString());
       const fetchPoints = async () => {
         try {
           const newPoints = await pointsService.getPoints(idFromStorage);
@@ -23,6 +22,7 @@ function App() {
         }
       };
 
+      setId(idFromStorage);
       fetchPoints();
     } else {
       setLoading(false);
