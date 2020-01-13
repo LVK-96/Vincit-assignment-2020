@@ -8,11 +8,13 @@
 }
 
 .messageContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   font-size: x-large;
   font-weight: bold;
   padding: 20px;
   margin: 20px;
-  height: 30px;
   border-radius: 12px;
 }
 
@@ -23,10 +25,24 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  padding: 20px;
 }
 
 .points {
   font-size: x-large;
   text-align: center;
   margin: 20px;
+}
+
+@media only screen and (max-width: 860px) {
+  .onGoingGameContainer {
+    justify-content: space-between;
+  }
+
+  .gameContainer {
+    position: static;
+    left: auto;
+    top: auto;
+    transform: none;
+  }
 }

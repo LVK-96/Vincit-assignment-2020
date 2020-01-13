@@ -15,7 +15,7 @@ html, body {
   border-radius: 12px;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 860px) {
   .gameButton {
     width: 280px;
   }
