@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-
 import pointsService from './Services/points';
 import gameService from './Services/game';
+import NewGameView from './Components/NewGameView';
 import Button from './Components/Button';
 import GameMessage from './Components/GameMessage';
 import Points from './Components/Points';
@@ -55,17 +55,6 @@ function App() {
     }
   };
 
-  const handleNewGameClick = async () => {
-    try {
-      const response = await pointsService.createPoints();
-      localStorage.setItem('id', response.id);
-      setPoints(response.amount);
-      setId(response.id);
-    } catch (e) {
-      window.alert('Failed to start game!');
-    }
-  };
-
   const hasGame = !!id && (points !== null);
   if (hasGame) {
     return (
@@ -80,7 +69,7 @@ function App() {
 
   return (
     <div className="App">
-      <Button text="New game!" handleClick={handleNewGameClick} disabled={false} visible />
+      <NewGameView setPoints={setPoints} setId={setId} />
     </div>
   );
 }
