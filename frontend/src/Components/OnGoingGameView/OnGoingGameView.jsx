@@ -31,21 +31,25 @@ const OnGoingGameView = ({
     }
   };
 
+  let buttonText = 'Pelaa';
+  let handleButtonClick = handlePlayClick;
+  if (points < 1) {
+    buttonText = 'Aloita alusta';
+    handleButtonClick = handleRestartClick;
+  }
+
   return (
     <>
       <div className="messageContainer">
         <GameMessage message={message} />
       </div>
       <div className="gameContainer">
-        <div className="playButtonContainer">
-          <Button className="playButton" text="Pelaa" handleClick={handlePlayClick} disabled={points < 1} visible />
+        <div className="gameButtonContainer">
+          <Button className="gameButton" text={buttonText} handleClick={handleButtonClick} visible />
         </div>
         <div className="pointsContainer">
           <Points className="points" points={points} />
         </div>
-      </div>
-      <div className="restartContainer">
-        <Button className="restartButton" text="Restart" handleClick={handleRestartClick} disabled={false} visible={points < 1} />
       </div>
     </>
   );

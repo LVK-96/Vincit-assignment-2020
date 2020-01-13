@@ -2,7 +2,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin: 20px;
 }
@@ -16,6 +16,10 @@
 .gameContainer {
   display: flex;
   flex-direction: column;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .points {
@@ -24,18 +28,7 @@
   margin: 20px;
 }
 
-.playButton {
-  background-color: red;
-  color: white;
-  font-size: xxx-large;
-  padding: 20px;
-}
-
-.restartContainer {
-  margin: 20px;
-}
-
-.restartButton {
+.gameButton {
   background-color: red;
   color: white;
   font-size: xxx-large;
