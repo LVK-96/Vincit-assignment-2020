@@ -5,36 +5,59 @@ import Points from '../Points';
 import GameMessage from '../GameMessage';
 import './OnGoingGameView.css';
 
+const MessageContainer = ({ loading, messageBackgroundColor, message }) => {
+  const msg = message ? `Sait ${message.reward} pistettä, seuraavaan voittoon ${message.untillNext} painallusta!` : '';
+  if (!loading) {
+    return (
+      <div style={{ backgroundColor: messageBackgroundColor, color: 'white' }} className="messageContainer">
+        <GameMessage message={msg} />
+      </div>
+    );
+  }
+
+  return (
+    <div className="messageContainer">
+      ...
+    </div>
+  );
+};
+
 const OnGoingGameView = ({
   setMessage, setPoints, setId, message, points, id,
 }) => {
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [messageBackgroundColor, setMessageBackGroundColor] = useState('white');
 
   const handlePlayClick = async () => {
     try {
-      setButtonDisabled(true); // Disable button whilst updating points
+      setLoading(true); // Disable button whilst updating points
       const result = await gameService.play(id);
       setPoints(points - 1 + result.reward);
       setMessage(result);
-      setButtonDisabled(false);
+      setMessageBackGroundColor('green');
+      if (!result.reward) setMessageBackGroundColor('red');
+      setLoading(false);
     } catch (e) {
       window.alert('Failed to play game!');
-      setButtonDisabled(false);
+      setLoading(false);
+      setMessageBackGroundColor('white');
     }
   };
 
   const handleRestartClick = async () => {
     try {
-      setButtonDisabled(true); // Disable button whilst updating points
+      setLoading(true); // Disable button whilst updating points
       const response = await gameService.restart(id);
       localStorage.setItem('id', response.id);
       setMessage(null);
       setPoints(response.amount);
       setId(response.id);
-      setButtonDisabled(false);
+      setLoading(false);
+      setMessageBackGroundColor('white');
     } catch (e) {
       window.alert('Failed to restart game!');
-      setButtonDisabled(false);
+      setLoading(false);
+      setMessageBackGroundColor('white');
     }
   };
 
@@ -45,19 +68,16 @@ const OnGoingGameView = ({
     handleButtonClick = handleRestartClick;
   }
 
-  let msg = message ? `Sait ${message.reward} pistettä, seuraavaan voittoon ${message.untillNext} painallusta!` : '';
-  if (buttonDisabled) {
-    msg = '...';
-  }
-
   return (
     <>
-      <div className="messageContainer">
-        <GameMessage message={msg} />
-      </div>
+      <MessageContainer
+        message={message}
+        loading={loading}
+        messageBackgroundColor={messageBackgroundColor}
+      />
       <div className="gameContainer">
         <div className="gameButtonContainer">
-          <Button className="gameButton" text={buttonText} handleClick={handleButtonClick} disabled={buttonDisabled} visible />
+          <Button className="gameButton" text={buttonText} handleClick={handleButtonClick} disabled={loading} visible />
         </div>
         <div className="pointsContainer">
           <Points className="points" points={points} />

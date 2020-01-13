@@ -8,9 +8,12 @@
 }
 
 .messageContainer {
-  font-size: large;
+  font-size: x-large;
+  font-weight: bold;
+  padding: 20px;
   margin: 20px;
   height: 30px;
+  border-radius: 12px;
 }
 
 .gameContainer {
