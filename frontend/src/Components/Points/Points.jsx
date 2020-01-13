@@ -1,17 +1,8 @@
 import React from 'react';
 
-import Button from '../Button';
-
-const Points = ({ points }) => (
-  <div>
-    <div>
-      {points}
-    </div>
-    {points < 1 && (
-      <div>
-        <Button />
-      </div>
-    )}
+const Points = ({ className, points }) => (
+  <div className={className}>
+    {`Pisteet: ${points}`}
   </div>
 );
 

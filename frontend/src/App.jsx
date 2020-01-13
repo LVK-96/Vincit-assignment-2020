@@ -33,7 +33,7 @@ function App() {
     const hasGame = !!id && (points !== null);
     if (hasGame) {
       return (
-        <div className="App">
+        <div className="onGoingGameContainer">
           <OnGoingGameView
             setMessage={setMessage}
             setPoints={setPoints}
