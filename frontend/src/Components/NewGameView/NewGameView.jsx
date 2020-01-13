@@ -18,7 +18,7 @@ const NewGameView = ({ setPoints, setId }) => {
   return (
     <>
       <div className="buttonContainer">
-        <Button className="newGameButton" text="New game" handleClick={handleNewGameClick} disabled={false} visible />
+        <Button className="gameButton" text="Uusi peli" handleClick={handleNewGameClick} disabled={false} visible />
       </div>
     </>
   );
