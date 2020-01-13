@@ -23,9 +23,9 @@ gameRouter.post('/play', async (request, response, next) => {
     }
 
     const newAmount = { amount: points.amount - 1 + reward };
-    await Points.findByIdAndUpdate(body.id, newAmount, { new: true });
+    await Points.findByIdAndUpdate(body.id, newAmount, { new: true, runValidators: true });
     state = tmpState % 500;
-    response.json({ win: reward, untillNext: 10 - (state % 10) });
+    response.json({ reward, untillNext: 10 - (state % 10) });
   } catch (e) {
     next(e);
   }

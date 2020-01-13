@@ -19,6 +19,7 @@ function App() {
           setLoading(false);
         } catch (e) {
           window.alert('Failed to fetch points!');
+          setLoading(false);
         }
       };
 

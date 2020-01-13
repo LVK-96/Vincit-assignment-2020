@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const pointsSchema = mongoose.Schema({
-  amount: { type: Number, required: true },
+  amount: { type: Number, min: 0, required: true },
 });
 
 pointsSchema.set('toJSON', {
