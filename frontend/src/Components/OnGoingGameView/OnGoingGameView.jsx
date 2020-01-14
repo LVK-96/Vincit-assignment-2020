@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import utils from '../../utils';
 import gameService from '../../Services/game';
 import Button from '../Button';
 import Points from '../Points';
@@ -23,7 +24,7 @@ const MessageContainer = ({ loading, messageBackgroundColor, message }) => {
 };
 
 const OnGoingGameView = ({
-  setMessage, setPoints, setId, message, points, id,
+  setMessage, setPoints, message, points,
 }) => {
   const [currentTimeOut, setCurrentTimeOut] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ const OnGoingGameView = ({
     try {
       clearTimeout(currentTimeOut);
       setLoading(true); // Disable button whilst updating points
-      const result = await gameService.play(id);
+      const result = await gameService.play();
       setPoints(points - 1 + result.reward);
       setMessage(result);
       if (!result.reward) setMessageBackGroundColor('red');
@@ -53,11 +54,10 @@ const OnGoingGameView = ({
   const handleRestartClick = async () => {
     try {
       setLoading(true); // Disable button whilst updating points
-      const response = await gameService.restart(id);
-      localStorage.setItem('id', response.id);
+      const response = await gameService.restart();
       setMessage(null);
-      setPoints(response.amount);
-      setId(response.id);
+      setPoints(20);
+      utils.setServiceToken(response.token);
       setLoading(false);
       setMessageBackGroundColor('white');
     } catch (e) {
