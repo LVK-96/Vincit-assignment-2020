@@ -12,6 +12,7 @@ function App() {
   useEffect(() => {
     const tokenFromStorage = localStorage.getItem('token');
     if (tokenFromStorage) {
+      // If token was found from local storage, fetch points by token
       const fetchPoints = async () => {
         try {
           const newPoints = await pointsService.getPoints();
@@ -23,16 +24,15 @@ function App() {
         }
       };
 
-      utils.setServiceToken(tokenFromStorage);
+      utils.setAndStoreToken(tokenFromStorage);
       fetchPoints();
     } else {
       setLoading(false);
     }
-  }, []);
+  }, []); // Run this effect only on initial render
 
   if (!loading) {
-    const hasGame = (points !== null);
-    if (hasGame) {
+    if (points !== null) { // If player has non-null points a game is ongoing
       return (
         <div className="onGoingGameContainer">
           <OnGoingGameView

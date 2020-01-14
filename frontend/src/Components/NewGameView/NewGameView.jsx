@@ -8,9 +8,8 @@ const NewGameView = ({ setPoints }) => {
   const handleNewGameClick = async () => {
     try {
       const response = await pointsService.createPoints();
-      localStorage.setItem('token', response.token);
+      utils.setAndStoreToken(response.token);
       setPoints(20);
-      utils.setServiceToken(response.token);
     } catch (e) {
       window.alert('Failed to start game!');
     }

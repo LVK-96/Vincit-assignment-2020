@@ -26,24 +26,29 @@ const MessageContainer = ({ loading, messageBackgroundColor, message }) => {
 const OnGoingGameView = ({
   setMessage, setPoints, message, points,
 }) => {
+  // Keep track of ongoing timeout so it can be canceled
   const [currentTimeOut, setCurrentTimeOut] = useState(null);
+  // When loading, disable button and show loading icon instead of message
   const [loading, setLoading] = useState(false);
   const [messageBackgroundColor, setMessageBackGroundColor] = useState('white');
 
   const handlePlayClick = async () => {
     try {
-      clearTimeout(currentTimeOut);
-      setLoading(true); // Disable button whilst updating points
+      clearTimeout(currentTimeOut); // Stop old timeout so message doesn't get hidden too soon
+      setLoading(true);
+
       const result = await gameService.play();
       setPoints(points - 1 + result.reward);
       setMessage(result);
       if (!result.reward) setMessageBackGroundColor('red');
       else setMessageBackGroundColor('green');
-      setLoading(false);
+
       setCurrentTimeOut(setTimeout(() => {
         setMessage(null);
         setMessageBackGroundColor('white');
-      }, 5000));
+      }, 5000)); // Message is visible for 5 seconds
+
+      setLoading(false);
     } catch (e) {
       window.alert('Failed to play game!');
       setLoading(false);
@@ -53,13 +58,15 @@ const OnGoingGameView = ({
 
   const handleRestartClick = async () => {
     try {
-      setLoading(true); // Disable button whilst updating points
+      setLoading(true);
+
       const response = await gameService.restart();
       setMessage(null);
       setPoints(20);
-      utils.setServiceToken(response.token);
-      setLoading(false);
+      utils.setAndStoreToken(response.token);
       setMessageBackGroundColor('white');
+
+      setLoading(false);
     } catch (e) {
       window.alert('Failed to restart game!');
       setLoading(false);
@@ -69,6 +76,7 @@ const OnGoingGameView = ({
 
   let buttonText = 'Pelaa';
   let handleButtonClick = handlePlayClick;
+  // Show correct text and use correct click handler when game needs to be restarted
   if (points < 1) {
     buttonText = 'Aloita alusta';
     handleButtonClick = handleRestartClick;
