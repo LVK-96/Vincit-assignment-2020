@@ -11,6 +11,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true });
 
 const app = express();
 app.use(cors());
+app.use(middleware.tokenExtractor);
 app.use(bodyParser.json());
 app.use('/points', pointsRouter);
 app.use('/game', gameRouter);
