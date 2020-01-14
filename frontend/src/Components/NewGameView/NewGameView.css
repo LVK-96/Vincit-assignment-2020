@@ -5,3 +5,13 @@
   justify-content: space-around;
   align-items: center;
 }
+
+.buttonContainer {
+  margin: 20px 20px 70px;
+}
+
+@media only screen and (max-width: 860px) {
+  .newGameContainer {
+    justify-content: flex-end;
+  }
+}
