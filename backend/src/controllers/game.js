@@ -8,7 +8,7 @@ gameRouter.post('/play', async (request, response, next) => {
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET);
     const points = await Points.findById(decodedToken.id);
-    if (!points) response.status(404).end();
+    if (!points) return response.status(404).end();
 
     const tmpState = state + 1;
     let reward;
