@@ -25,18 +25,24 @@ const MessageContainer = ({ loading, messageBackgroundColor, message }) => {
 const OnGoingGameView = ({
   setMessage, setPoints, setId, message, points, id,
 }) => {
+  const [currentTimeOut, setCurrentTimeOut] = useState(null);
   const [loading, setLoading] = useState(false);
   const [messageBackgroundColor, setMessageBackGroundColor] = useState('white');
 
   const handlePlayClick = async () => {
     try {
+      clearTimeout(currentTimeOut);
       setLoading(true); // Disable button whilst updating points
       const result = await gameService.play(id);
       setPoints(points - 1 + result.reward);
       setMessage(result);
-      setMessageBackGroundColor('green');
       if (!result.reward) setMessageBackGroundColor('red');
+      else setMessageBackGroundColor('green');
       setLoading(false);
+      setCurrentTimeOut(setTimeout(() => {
+        setMessage(null);
+        setMessageBackGroundColor('white');
+      }, 5000));
     } catch (e) {
       window.alert('Failed to play game!');
       setLoading(false);
