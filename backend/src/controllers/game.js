@@ -6,7 +6,6 @@ let state = 0;
 gameRouter.post('/play', async (request, response, next) => {
   try {
     const { body } = request;
-    console.log('Play', body.id, state);
     const points = await Points.findById(body.id);
     if (!points) response.status(404).end();
 
@@ -34,7 +33,6 @@ gameRouter.post('/play', async (request, response, next) => {
 gameRouter.post('/restart', async (request, response, next) => {
   try {
     const { body } = request;
-    console.log('Restart', body.id);
     await Points.findByIdAndDelete(body.id);
     const points = new Points({ amount: 20 });
     const savedPoints = await points.save();
