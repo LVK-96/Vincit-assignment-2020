@@ -33,8 +33,8 @@ gameRouter.post('/play', async (request, response, next) => {
 
 gameRouter.post('/restart', async (request, response, next) => {
   try {
-    const { body } = request;
-    await Points.findByIdAndDelete(body.id);
+    const decodedToken = jwt.verify(request.token, process.env.SECRET);
+    await Points.findByIdAndDelete(decodedToken.id);
     const points = new Points({ amount: 20 });
     const savedPoints = await points.save();
     const token = jwt.sign({ id: savedPoints._id }, process.env.SECRET);
