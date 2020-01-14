@@ -2,7 +2,7 @@ const pointsRouter = require('express').Router();
 const jwt = require('jsonwebtoken');
 const Points = require('../models/points');
 
-pointsRouter.get('/', async (request, response, next) => {
+pointsRouter.get('/ongoing', async (request, response, next) => {
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET);
     const points = await Points.findById(decodedToken.id);
