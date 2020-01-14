@@ -1,9 +1,11 @@
 const pointsRouter = require('express').Router();
+const jwt = require('jsonwebtoken');
 const Points = require('../models/points');
 
-pointsRouter.get('/:id', async (request, response, next) => {
+pointsRouter.get('/', async (request, response, next) => {
   try {
-    const points = await Points.findById(request.params.id);
+    const decodedToken = jwt.verify(request.token, process.env.SECRET);
+    const points = await Points.findById(decodedToken.id);
     if (!points) response.status(404).end();
     response.json(points.toJSON());
   } catch (e) {
@@ -15,7 +17,8 @@ pointsRouter.post('/', async (request, response, next) => {
   try {
     const points = new Points({ amount: 20 });
     const savedPoints = await points.save();
-    response.json(savedPoints.toJSON());
+    const token = jwt.sign({ id: savedPoints._id }, process.env.SECRET);
+    response.json({ token });
   } catch (e) {
     next(e);
   }
