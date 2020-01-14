@@ -10,6 +10,11 @@ function App() {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
+    /*
+     * Bare mongodb object id was not random enough => it would allow for easy guessing attacks.
+     * Instead we encode the id in a JSON web token.
+     * The backend decodes the token and uses the id to find corresponding points.
+     */
     const tokenFromStorage = localStorage.getItem('token');
     if (tokenFromStorage) {
       // If token was found from local storage, fetch points by token

@@ -11,7 +11,6 @@ gameRouter.post('/play', async (request, response, next) => {
     if (!points) return response.status(404).end(); // No points entry for the provided id
 
     const tmpState = state + 1;
-
     /*
      * Rewards:
      *  * Divisible by 500 => 250
@@ -20,7 +19,6 @@ gameRouter.post('/play', async (request, response, next) => {
      *
      *  * Player can't get multiple rewards in one click, only give the highest applicable
      */
-
     let reward;
     if (tmpState % 500 === 0) {
       reward = 250;
