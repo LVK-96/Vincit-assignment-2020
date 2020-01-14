@@ -5,6 +5,7 @@ const pointsSchema = mongoose.Schema({
 });
 
 pointsSchema.set('toJSON', {
+  // Rename _id as id and drop __v
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
