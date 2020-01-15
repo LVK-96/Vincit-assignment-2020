@@ -1,9 +1,9 @@
-import pointsService from './Services/points';
+import usersService from './Services/users';
 import gameService from './Services/game';
 
 const setAndStoreToken = (token) => {
   // Set token to all services and store in local storage
-  pointsService.setToken(token);
+  usersService.setToken(token);
   gameService.setToken(token);
   localStorage.setItem('token', token);
 };

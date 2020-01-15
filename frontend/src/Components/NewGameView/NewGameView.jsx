@@ -1,13 +1,13 @@
 import React from 'react';
 import utils from '../../utils';
-import pointsService from '../../Services/points';
+import usersService from '../../Services/users';
 import Button from '../Button';
 import './NewGameView.css';
 
 const NewGameView = ({ setPoints }) => {
   const handleNewGameClick = async () => {
     try {
-      const response = await pointsService.createPoints();
+      const response = await usersService.createUser();
       utils.setAndStoreToken(response.token);
       setPoints(20);
     } catch (e) {

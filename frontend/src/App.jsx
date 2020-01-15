@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import utils from './utils';
-import pointsService from './Services/points';
+import usersService from './Services/users';
 import NewGameView from './Components/NewGameView';
 import OnGoingGameView from './Components/OnGoingGameView';
 
@@ -18,10 +18,10 @@ function App() {
     const tokenFromStorage = localStorage.getItem('token');
     if (tokenFromStorage) {
       // If token was found from local storage, fetch points by token
-      const fetchPoints = async () => {
+      const fetchUser = async () => {
         try {
-          const newPoints = await pointsService.getPoints();
-          setPoints(newPoints.amount);
+          const newUser = await usersService.getUser();
+          setPoints(newUser.points);
           setLoading(false);
         } catch (e) {
           window.alert('Failed to fetch points!');
@@ -30,7 +30,7 @@ function App() {
       };
 
       utils.setAndStoreToken(tokenFromStorage);
-      fetchPoints();
+      fetchUser();
     } else {
       setLoading(false);
     }

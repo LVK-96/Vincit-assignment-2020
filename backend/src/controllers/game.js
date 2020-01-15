@@ -1,14 +1,14 @@
 const gameRouter = require('express').Router();
 const jwt = require('jsonwebtoken');
-const Points = require('../models/points');
+const User = require('../models/user');
 
 let state = 0; // Game state
 
 gameRouter.post('/play', async (request, response, next) => {
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET);
-    const points = await Points.findById(decodedToken.id);
-    if (!points) return response.status(404).end(); // No points entry for the provided id
+    const user = await User.findById(decodedToken.id);
+    if (!user) return response.status(404).end(); // No points entry for the provided id
 
     const tmpState = state + 1;
     /*
@@ -30,9 +30,9 @@ gameRouter.post('/play', async (request, response, next) => {
       reward = 0;
     }
 
-    const newAmount = { amount: points.amount - 1 + reward };
+    const newPoints = { points: user.points - 1 + reward };
     // Run validators to make sure points don't go below 0
-    await Points.findByIdAndUpdate(decodedToken.id, newAmount, { runValidators: true });
+    await User.findByIdAndUpdate(decodedToken.id, newPoints, { runValidators: true });
     state = tmpState % 500; // Wrap game state to 0 once it hits 500
     // Return reward and clicks untill next win
     response.json({ reward, untillNext: 10 - (state % 10) });
@@ -44,12 +44,12 @@ gameRouter.post('/play', async (request, response, next) => {
 gameRouter.post('/restart', async (request, response, next) => {
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET);
-    await Points.findByIdAndDelete(decodedToken.id); // Delete old points which are 0
-    const points = new Points({ amount: 20 }); // Create new points
-    const savedPoints = await points.save();
-    // Generate token for new points
-    const token = jwt.sign({ id: savedPoints._id }, process.env.SECRET);
-    response.json({ token }); // Return token
+    await User.findByIdAndDelete(decodedToken.id); // Delete old user with 0 points
+    const user = new User({ points: 20 }); // Create new user
+    const savedUser = await user.save();
+    // Generate token for new user
+    const token = jwt.sign({ id: savedUser._id }, process.env.SECRET);
+    response.json({ ...savedUser.toJSON(), token }); // Return user and token
   } catch (e) {
     next(e);
   }

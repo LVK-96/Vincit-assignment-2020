@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const pointsSchema = mongoose.Schema({
-  amount: { type: Number, min: 0, required: true },
+const userSchema = mongoose.Schema({
+  points: { type: Number, min: 0, required: true },
 });
 
-pointsSchema.set('toJSON', {
+userSchema.set('toJSON', {
   // Rename _id as id and drop __v
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
@@ -13,4 +13,4 @@ pointsSchema.set('toJSON', {
   },
 });
 
-module.exports = mongoose.model('Points', pointsSchema);
+module.exports = mongoose.model('User', userSchema);
