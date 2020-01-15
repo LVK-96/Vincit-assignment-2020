@@ -60,9 +60,9 @@ const OnGoingGameView = ({
     try {
       setLoading(true);
 
-      await usersService.resetPoints();
+      const user = await usersService.resetPoints();
       setMessage(null);
-      setPoints(20);
+      setPoints(user.points);
       setMessageBackGroundColor('white');
 
       setLoading(false);
