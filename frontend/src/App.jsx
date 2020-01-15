@@ -16,7 +16,8 @@ function App() {
      * The backend decodes the token and uses the id to find corresponding points.
      */
     const tokenFromStorage = localStorage.getItem('token');
-    if (tokenFromStorage) {
+    const idFromStorage = localStorage.getItem('id');
+    if (tokenFromStorage && idFromStorage) {
       // If token was found from local storage, fetch points by token
       const fetchUser = async () => {
         try {
@@ -30,6 +31,7 @@ function App() {
       };
 
       utils.setAndStoreToken(tokenFromStorage);
+      utils.setAndStoreId(idFromStorage);
       fetchUser();
     } else {
       setLoading(false);

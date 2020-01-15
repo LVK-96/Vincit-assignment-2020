@@ -6,6 +6,11 @@ const setToken = (newToken) => {
   token = `bearer ${newToken}`;
 };
 
+let id = null;
+const setId = (newId) => {
+  id = newId;
+};
+
 const getUser = async () => {
   // Get user by token
   const config = {
@@ -14,7 +19,7 @@ const getUser = async () => {
     },
   };
 
-  const response = await axios.get(`${baseUrl}/by-token`, config); // Return user
+  const response = await axios.get(`${baseUrl}/${id}`, config); // Return user
   return response.data;
 };
 
@@ -32,12 +37,13 @@ const resetPoints = async () => {
     },
   };
 
-  const response = await axios.put(`${baseUrl}/reset/by-token`, {}, config); // Return user
+  const response = await axios.put(`${baseUrl}/${id}/reset`, {}, config); // Return user
   return response.data;
 };
 
 export default {
   setToken,
+  setId,
   getUser,
   createUser,
   resetPoints,

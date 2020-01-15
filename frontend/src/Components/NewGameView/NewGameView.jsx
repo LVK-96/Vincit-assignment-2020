@@ -9,6 +9,7 @@ const NewGameView = ({ setPoints }) => {
     try {
       const user = await usersService.createUser();
       utils.setAndStoreToken(user.token);
+      utils.setAndStoreId(user.id);
       setPoints(user.points);
     } catch (e) {
       window.alert('Failed to start game!');

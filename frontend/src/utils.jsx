@@ -8,4 +8,10 @@ const setAndStoreToken = (token) => {
   localStorage.setItem('token', token);
 };
 
-export default { setAndStoreToken };
+const setAndStoreId = (id) => {
+  // Set id id to usersService and store in local storage
+  usersService.setId(id);
+  localStorage.setItem('id', id);
+};
+
+export default { setAndStoreToken, setAndStoreId };
