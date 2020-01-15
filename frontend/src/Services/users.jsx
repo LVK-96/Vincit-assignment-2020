@@ -14,7 +14,7 @@ const getUser = async () => {
     },
   };
 
-  const response = await axios.get(`${baseUrl}/byid`, config); // Return user
+  const response = await axios.get(`${baseUrl}/by-token`, config); // Return user
   return response.data;
 };
 
@@ -24,4 +24,21 @@ const createUser = async () => {
   return response.data;
 };
 
-export default { setToken, getUser, createUser };
+const resetPoints = async () => {
+  // Start new game by reseting users points
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+  };
+
+  const response = await axios.put(`${baseUrl}/reset/by-token`, {}, config); // Return user
+  return response.data;
+};
+
+export default {
+  setToken,
+  getUser,
+  createUser,
+  resetPoints,
+};

@@ -41,18 +41,4 @@ gameRouter.post('/play', async (request, response, next) => {
   }
 });
 
-gameRouter.post('/restart', async (request, response, next) => {
-  try {
-    const decodedToken = jwt.verify(request.token, process.env.SECRET);
-    await User.findByIdAndDelete(decodedToken.id); // Delete old user with 0 points
-    const user = new User({ points: 20 }); // Create new user
-    const savedUser = await user.save();
-    // Generate token for new user
-    const token = jwt.sign({ id: savedUser._id }, process.env.SECRET);
-    response.json({ ...savedUser.toJSON(), token }); // Return user and token
-  } catch (e) {
-    next(e);
-  }
-});
-
 module.exports = gameRouter;

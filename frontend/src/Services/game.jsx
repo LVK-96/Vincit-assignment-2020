@@ -19,17 +19,4 @@ const play = async () => {
   return response.data;
 };
 
-const restart = async () => {
-  // Restart game (delete old game and create a new one)
-  const config = {
-    headers: {
-      Authorization: token,
-    },
-  };
-
-  // Returns token
-  const response = await axios.post(`${baseUrl}/restart`, {}, config);
-  return response.data;
-};
-
-export default { setToken, play, restart };
+export default { setToken, play };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import utils from '../../utils';
 import gameService from '../../Services/game';
+import usersService from '../../Services/users';
 import Button from '../Button';
 import Points from '../Points';
 import GameMessage from '../GameMessage';
@@ -60,10 +60,9 @@ const OnGoingGameView = ({
     try {
       setLoading(true);
 
-      const response = await gameService.restart();
+      await usersService.resetPoints();
       setMessage(null);
       setPoints(20);
-      utils.setAndStoreToken(response.token);
       setMessageBackGroundColor('white');
 
       setLoading(false);
