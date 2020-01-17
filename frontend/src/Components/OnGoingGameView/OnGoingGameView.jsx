@@ -10,14 +10,14 @@ const MessageContainer = ({ loading, messageBackgroundColor, message }) => {
   const msg = message ? `Sait ${message.reward} pistettä, seuraavaan voittoon ${message.untillNext} painallusta!` : '';
   if (!loading) {
     return (
-      <div style={{ backgroundColor: messageBackgroundColor, color: 'white' }} className="messageContainer">
+      <div style={{ backgroundColor: messageBackgroundColor, color: 'white' }} className="message-container">
         <GameMessage message={msg} />
       </div>
     );
   }
 
   return (
-    <div className="messageContainer">
+    <div className="message-container">
       ...
     </div>
   );
@@ -88,11 +88,11 @@ const OnGoingGameView = ({
         loading={loading}
         messageBackgroundColor={messageBackgroundColor}
       />
-      <div className="gameContainer">
-        <div className="gameButtonContainer">
-          <Button className="gameButton" text={buttonText} handleClick={handleButtonClick} disabled={loading} visible />
+      <div className="game-container">
+        <div className="game-button-container">
+          <Button className="game-button" text={buttonText} handleClick={handleButtonClick} disabled={loading} visible />
         </div>
-        <div className="pointsContainer">
+        <div className="points-container">
           <Points className="points" points={points} />
         </div>
       </div>

@@ -41,7 +41,7 @@ function App() {
   if (!loading) {
     if (points !== null) { // If player has non-null points a game is ongoing
       return (
-        <div className="onGoingGameContainer">
+        <div className="on-going-game-container">
           <OnGoingGameView
             setMessage={setMessage}
             setPoints={setPoints}
@@ -53,7 +53,7 @@ function App() {
     }
 
     return (
-      <div className="newGameContainer">
+      <div className="new-game-container">
         <NewGameView setPoints={setPoints} />
       </div>
     );

@@ -10,7 +10,7 @@ html, body {
   height: 100%;
 }
 
-.gameButton {
+.game-button {
   background-color: red;
   color: white;
   font-size: xxx-large;
@@ -20,7 +20,7 @@ html, body {
 }
 
 @media only screen and (max-width: 860px) {
-  .gameButton {
+  .game-button {
     width: 280px;
   }
 }
