@@ -61,7 +61,7 @@ function App() {
 
   return (
     <div className="loading">
-      Loading...
+      Lataa...
     </div>
   );
 }

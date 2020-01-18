@@ -10,7 +10,10 @@ const MessageContainer = ({ loading, messageBackgroundColor, message }) => {
   const msg = message ? `Sait ${message.reward} pistettä, seuraavaan voittoon ${message.untillNext} painallusta!` : '';
   if (!loading) {
     return (
-      <div style={{ backgroundColor: messageBackgroundColor, color: 'white' }} className="message-container">
+      <div
+        style={{ backgroundColor: messageBackgroundColor, color: 'white' }}
+        className="message-container"
+      >
         <GameMessage message={msg} />
       </div>
     );
