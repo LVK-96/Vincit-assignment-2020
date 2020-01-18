@@ -24,7 +24,7 @@ const createState = async () => { // Create game state if it doesn't exist
 createState();
 
 const app = express();
-app.use(cors());
+app.use(cors({ maxAge: 600 }));
 app.use(middleware.tokenExtractor);
 app.use(bodyParser.json());
 app.use('/users', usersRouter);
