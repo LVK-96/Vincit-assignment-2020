@@ -20,8 +20,12 @@ module.exports = {
   },
   plugins: [
     'react',
+    'jest',
   ],
   rules: {
     'react/prop-types': 0
   },
+  env: {
+    jest: true,
+  }
 };
