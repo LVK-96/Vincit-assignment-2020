@@ -5,9 +5,23 @@ const mongoose = require('mongoose');
 const middleware = require('./utils/middleware');
 const config = require('./utils/config');
 const usersRouter = require('./controllers/users');
-const gameRouter = require('./controllers/game');
+const { gameRouter, setGameStateId } = require('./controllers/game');
+const GameState = require('./models/gameState');
 
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true });
+
+const createState = async () => { // Create game state if it doesn't exist
+  const stateFromDb = await GameState.find({});
+  if (stateFromDb.length === 0) { // No gamestate in db
+    const newState = new GameState();
+    const savedState = await newState.save();
+    setGameStateId(savedState._id);
+  } else {
+    setGameStateId(stateFromDb[0]._id);
+  }
+};
+
+createState();
 
 const app = express();
 app.use(cors());

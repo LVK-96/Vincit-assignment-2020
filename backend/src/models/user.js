@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-  points: { type: Number, min: 0, required: true },
+  points: {
+    type: Number,
+    min: 0,
+    default: 20,
+    required: true,
+  },
 });
 
 userSchema.set('toJSON', {

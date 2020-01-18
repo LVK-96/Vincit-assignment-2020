@@ -20,7 +20,7 @@ usersRouter.post('/', async (request, response, next) => {
     const savedUser = await user.save();
     // Generate token for new user
     const token = jwt.sign({ id: savedUser._id }, process.env.SECRET);
-    response.json({ ...savedUser.toJSON(), token }); // Return user and token
+    response.status(201).json({ ...savedUser.toJSON(), token }); // Return user and token
   } catch (e) {
     next(e);
   }

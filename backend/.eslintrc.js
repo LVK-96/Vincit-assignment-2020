@@ -14,6 +14,8 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
   },
-  rules: {
-  },
+  plugins: ['jest'],
+  env: {
+    jest: true,
+  }
 };
