@@ -11,13 +11,18 @@ describe('Tests that don`t require a user in the database', () => {
     await User.deleteMany({});
   });
 
-  test('user creation returns points, id and token', async () => {
+  test('user creation returns points, id and token and user is found from db', async () => {
     const response = await api.post('/users')
       .expect(201)
       .expect('Content-Type', /application\/json/);
     expect(response.body).toHaveProperty('id');
     expect(response.body).toHaveProperty('points');
     expect(response.body).toHaveProperty('token');
+
+    let users = await User.find({});
+    users = users.map(u => u._id);
+    // https://github.com/facebook/jest/issues/8475#issuecomment-537830532
+    expect(JSON.stringify(users[0])).toEqual(JSON.stringify(response.body.id));
   });
 });
 
