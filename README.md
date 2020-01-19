@@ -22,8 +22,6 @@ Deployed to: https://vincit-game.herokuapp.com/
 
 ## Running e2e tests
 
-### Pre-requisites
-
 ```bash
 cd backend
 docker-compose -f docker-compose.test.yml up # start backend in e2e mode
