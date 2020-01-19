@@ -1,7 +1,13 @@
 import axios from 'axios';
 import mock from './__mocks__/users';
 
-const baseUrl = 'http://localhost:8000/users';
+let baseUrl;
+if (process.env.REACT_APP_E2E) {
+  baseUrl = 'http://localhost:8000/users';
+} else {
+  baseUrl = `${process.env.BACKEND_URI}/users`;
+}
+
 let token = null;
 const setToken = (newToken) => {
   token = `bearer ${newToken}`;

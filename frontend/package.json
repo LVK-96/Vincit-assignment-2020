@@ -13,6 +13,7 @@
   },
   "scripts": {
     "start:dev": "REACT_APP_DEV=true react-scripts start",
+    "start:e2e": "REACT_APP_E2E=true react-scripts start",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "build": "react-scripts build",
