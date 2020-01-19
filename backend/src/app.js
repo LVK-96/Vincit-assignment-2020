@@ -36,6 +36,7 @@ GameState.find({})
   });
 
 const app = express();
+app.use(express.static('build')); // Serve react app
 app.use(cors({ maxAge: 600 }));
 app.use(middleware.tokenExtractor);
 app.use(bodyParser.json());
