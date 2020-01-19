@@ -24,8 +24,6 @@ Deployed to: https://vincit-game.herokuapp.com/
 
 ### Pre-requisites
 
-* Setup dev environments for both the frontend and backend. Refer to the respective READMEs.
-
 ```bash
 cd backend
 docker-compose -f docker-compose.test.yml up # start backend in e2e mode
