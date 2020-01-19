@@ -9,7 +9,11 @@ const usersRouter = require('./controllers/users');
 const { gameRouter, setGameStateId } = require('./controllers/game');
 const GameState = require('./models/gameState');
 
-mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
+mongoose.connect(config.MONGODB_URI, {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+})
   .then(() => {
     logger.info('Connected to mongo');
   })
