@@ -1,4 +1,5 @@
 import axios from 'axios';
+import mock from './__mocks__/game';
 
 const baseUrl = 'http://localhost:8000/game';
 let token = null;
@@ -7,6 +8,10 @@ const setToken = (newToken) => {
 };
 
 const play = async () => {
+  if (process.env.REACT_APP_DEV) {
+    return mock.play();
+  }
+
   // Play the game
   const config = {
     headers: {

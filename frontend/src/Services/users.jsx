@@ -1,4 +1,5 @@
 import axios from 'axios';
+import mock from './__mocks__/users';
 
 const baseUrl = 'http://localhost:8000/users';
 let token = null;
@@ -12,6 +13,9 @@ const setId = (newId) => {
 };
 
 const getUser = async () => {
+  if (process.env.REACT_APP_DEV) {
+    return mock.getUser();
+  }
   // Get user by token
   const config = {
     headers: {
@@ -24,12 +28,18 @@ const getUser = async () => {
 };
 
 const createUser = async () => {
+  if (process.env.REACT_APP_DEV) {
+    return mock.createUser();
+  }
   // Start new game by creating a new user
   const response = await axios.post(baseUrl); // Returns user and token
   return response.data;
 };
 
 const resetPoints = async () => {
+  if (process.env.REACT_APP_DEV) {
+    return mock.resetPoints();
+  }
   // Start new game by reseting users points
   const config = {
     headers: {

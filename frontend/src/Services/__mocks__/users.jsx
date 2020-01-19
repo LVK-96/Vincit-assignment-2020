@@ -10,7 +10,21 @@ const setToken = () => {};
 const setId = () => {};
 
 const getUser = () => {
-  return Promise.resolve(users[0])
-}
+  return Promise.resolve(users[0]);
+};
 
-export default { setToken, setId, getUser }
+const createUser = () => {
+  return Promise.resolve({ ...users[0], token: 'token' });
+};
+
+const resetPoints = () => {
+  return Promise.resolve({ ...users[0], points: 20 });
+};
+
+export default {
+  setToken,
+  setId,
+  getUser,
+  createUser,
+  resetPoints,
+};
