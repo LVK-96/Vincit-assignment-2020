@@ -10,10 +10,12 @@ const api = supertest(app);
 
 describe('Tests that require a single user in the database', () => {
   let testUser;
+  let gameStateId;
   beforeEach(async () => {
     await GameState.deleteMany({});
     const gameStateToSave = new GameState();
     const savedState = await gameStateToSave.save();
+    gameStateId =savedState._id;
     setGameStateId(savedState._id);
 
     await User.deleteMany({});
@@ -23,12 +25,16 @@ describe('Tests that require a single user in the database', () => {
     testUser = { id: newUser._id, token };
   });
 
-  test('play returns 0 reward and 9 clicks untill next win on first click', async () => {
+  test(`play returns 0 reward and 9 clicks untill next win on first click
+        and state is incremented by 1`, async () => {
     const response = await api.post('/game/play')
       .set('Authorization', `bearer ${testUser.token}`)
       .expect(200);
     expect(response.body).toHaveProperty('reward', 0);
     expect(response.body).toHaveProperty('untillNext', 9);
+
+    const state = await GameState.findById(gameStateId);
+    expect(state.state).toEqual(1);
   });
 
   test('play returns 403 if user has 0 points', async () => {
@@ -62,16 +68,19 @@ describe('Tests that require a single user in the database', () => {
 describe('Tests that require multiples users in the database', () => {
   let testUsers = [];
   let testUser;
-  let lastUserI;
+  let gameStateId;
   beforeEach(async () => {
     await GameState.deleteMany({});
     const gameStateToSave = new GameState();
     const savedState = await gameStateToSave.save();
+    gameStateId = savedState._id;
     setGameStateId(savedState._id);
 
     await User.deleteMany({});
     const promises = [];
-    for (let i = 0; i < 100; i++) {
+    const numUsers = 25;
+    lastUserI = numUsers - 1;
+    for (let i = 0; i < numUsers; i++) {
       const userToSave = new User();
       const newUser = userToSave.save();
       promises.push(newUser);
@@ -81,7 +90,6 @@ describe('Tests that require multiples users in the database', () => {
       const token = jwt.sign({ id: u._id }, process.env.SECRET);
       return { id: u._id, token };
     });
-    lastUserI = 99;
 
     const userToSave = new User();
     const newUser = await userToSave.save();
@@ -93,7 +101,7 @@ describe('Tests that require multiples users in the database', () => {
     let responses = [];
     for (let i = 0; i < 9; i++) {
       responses.push(api.post('/game/play')
-        .set('Authorization', `bearer ${testUsers[i % lastUserI].token}`)
+        .set('Authorization', `bearer ${testUsers[i % testUsers.length].token}`)
         .expect(200));
     }
 
@@ -103,13 +111,16 @@ describe('Tests that require multiples users in the database', () => {
       .expect(200);
     expect(response.body).toHaveProperty('reward', 5);
     expect(response.body).toHaveProperty('untillNext', 10);
+
+    const state = await GameState.findById(gameStateId);
+    expect(state.state).toEqual(10);
   });
 
   test('play returns 40 reward and 10 clicks untill next win on 100th click', async () => {
     let responses = [];
     for (let i = 0; i < 99; i++) {
       responses.push(api.post('/game/play')
-        .set('Authorization', `bearer ${testUsers[i % lastUserI].token}`)
+        .set('Authorization', `bearer ${testUsers[i % testUsers.length].token}`)
         .expect(200));
     }
 
@@ -119,13 +130,17 @@ describe('Tests that require multiples users in the database', () => {
       .expect(200);
     expect(response.body).toHaveProperty('reward', 40);
     expect(response.body).toHaveProperty('untillNext', 10);
+
+    const state = await GameState.findById(gameStateId);
+    expect(state.state).toEqual(100);
   });
 
-  test('play returns 250 reward and 10 clicks untill next win on 500th click', async () => {
+  test(`play returns 250 reward and 10 clicks untill next win on 500th click
+        and state wraps around to 0`, async () => {
     let responses = [];
     for (let i = 0; i < 499; i++) {
       responses.push(api.post('/game/play')
-        .set('Authorization', `bearer ${testUsers[i % lastUserI].token}`)
+        .set('Authorization', `bearer ${testUsers[i % testUsers.length].token}`)
         .expect(200));
     }
 
@@ -135,6 +150,9 @@ describe('Tests that require multiples users in the database', () => {
       .expect(200);
     expect(response.body).toHaveProperty('reward', 250);
     expect(response.body).toHaveProperty('untillNext', 10);
+
+    const state = await GameState.findById(gameStateId);
+    expect(state.state).toEqual(0);
   });
 });
 

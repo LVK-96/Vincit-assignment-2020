@@ -16,13 +16,20 @@ gameRouter.post('/play', async (request, response, next) => {
     const decodedToken = jwt.verify(request.token, process.env.SECRET);
     let reward;
     let untillNext;
-    await s.acquire(); // Semaphore to make sure only one player can update the state at a time
+
+    /*
+     * Semaphore to make sure updates to the state and scores are visible
+     * to all following requests
+     */
+
+    await s.acquire(); // Only one request can enter this section
     try {
       const user = await User.findById(decodedToken.id);
       if (!user) return response.status(404).end(); // No points entry for the provided id
       if (user.points < 1) return response.status(403).end();
       const stateFromDb = await GameState.findById(gameStateId);
       let state = stateFromDb.state + 1;
+
       /*
        * Rewards:
        *  * Divisible by 500 => 250
@@ -31,6 +38,7 @@ gameRouter.post('/play', async (request, response, next) => {
        *
        *  * Player can't get multiple rewards in one click, only give the highest applicable
        */
+
       if (state % 500 === 0) {
         reward = 250;
       } else if (state % 100 === 0) {
@@ -43,12 +51,10 @@ gameRouter.post('/play', async (request, response, next) => {
 
       state %= 500; // Wrap game state to 0 once it hits 500
       untillNext = 10 - (state % 10);
-      await GameState.findByIdAndUpdate(
-        gameStateId, { state }, { runValidators: true, upsert: true },
-      );
 
+      // Update points and state
+      await GameState.findByIdAndUpdate(gameStateId, { state }, { runValidators: true });
       const newPoints = { points: user.points - 1 + reward };
-      // Run validators to make sure points don't go below 0
       await User.findByIdAndUpdate(decodedToken.id, newPoints, { runValidators: true });
     } catch (e) {
       next(e);

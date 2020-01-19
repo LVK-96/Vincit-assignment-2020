@@ -4,6 +4,7 @@ const gameStateSchema = mongoose.Schema({
   state: {
     type: Number,
     min: 0,
+    max: 499,
     default: 0,
     required: true,
   },
