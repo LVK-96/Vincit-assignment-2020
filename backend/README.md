@@ -21,6 +21,7 @@ docker-compose -f docker-compose.test.yml run backend yarn test
 
 * [NodeJS](https://nodejs.org/en/)
 * [Express](https://expressjs.com/)
+* [Jest](https://jestjs.io/)
 * [mongoose](https://mongoosejs.com/)
 * [MongoDB](https://www.mongodb.com/)
 * [Docker](https://docs.docker.com/install/)

@@ -3,9 +3,9 @@ import mock from './__mocks__/game';
 
 let baseUrl;
 if (process.env.REACT_APP_E2E) {
-  baseUrl = 'http://localhost:8000/game';
+  baseUrl = 'http://localhost:8000/api/game';
 } else {
-  baseUrl = `${process.env.BACKEND_URI}/game`;
+  baseUrl = `${process.env.REACT_APP_BACKEND_URI}/game`;
 }
 
 let token = null;

@@ -1,6 +1,6 @@
 describe('Game app', () => {
   beforeEach(() => {
-    cy.request('POST', 'http://localhost:8000/test/reset');
+    cy.request('POST', 'http://localhost:8000/api/test/reset');
   });
 
   it('front page can be opened', () => {

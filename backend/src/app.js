@@ -44,11 +44,11 @@ app.use(middleware.requestLogger);
 // In e2e test environment expose /test/reset endpoint
 if (config.NODE_ENV === 'e2e_test') {
   const testResetRouter = require('./controllers/testReset');
-  app.use('/test', testResetRouter);
+  app.use('/api/test', testResetRouter);
 }
 
-app.use('/users', usersRouter);
-app.use('/game', gameRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/game', gameRouter);
 app.use(middleware.errorHandler);
 
 module.exports = app;

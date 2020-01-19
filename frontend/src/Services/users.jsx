@@ -3,9 +3,9 @@ import mock from './__mocks__/users';
 
 let baseUrl;
 if (process.env.REACT_APP_E2E) {
-  baseUrl = 'http://localhost:8000/users';
+  baseUrl = 'http://localhost:8000/api/users';
 } else {
-  baseUrl = `${process.env.BACKEND_URI}/users`;
+  baseUrl = `${process.env.REACT_APP_BACKEND_URI}/users`;
 }
 
 let token = null;
@@ -37,6 +37,7 @@ const createUser = async () => {
   if (process.env.REACT_APP_DEV) {
     return mock.createUser();
   }
+
   // Start new game by creating a new user
   const response = await axios.post(baseUrl); // Returns user and token
   return response.data;
