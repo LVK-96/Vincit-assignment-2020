@@ -17,6 +17,11 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
     logger.error('Error in connecting to mongo:', e.message);
   });
 
+/*
+ * Check if we have a game state in the db
+ * If not create a new game state
+ */
+
 GameState.find({})
   .then((stateFromDb) => {
     if (stateFromDb.length === 0) { // No gamestate in db
@@ -36,7 +41,7 @@ app.use(middleware.tokenExtractor);
 app.use(bodyParser.json());
 app.use(middleware.requestLogger);
 
-// In e2e test environment expose /test/reset endpoint to reset db
+// In e2e test environment expose /test/reset endpoint
 if (config.NODE_ENV === 'e2e_test') {
   const testResetRouter = require('./controllers/testReset');
   app.use('/test', testResetRouter);
@@ -44,8 +49,6 @@ if (config.NODE_ENV === 'e2e_test') {
 
 app.use('/users', usersRouter);
 app.use('/game', gameRouter);
-
-
 app.use(middleware.errorHandler);
 
 module.exports = app;

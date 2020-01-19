@@ -26,7 +26,7 @@ gameRouter.post('/play', async (request, response, next) => {
     try {
       const user = await User.findById(decodedToken.id);
       if (!user) return response.status(404).end(); // No points entry for the provided id
-      if (user.points < 1) return response.status(403).end();
+      if (user.points < 1) return response.status(403).end(); // Can't play if not enough points
       const stateFromDb = await GameState.findById(gameStateId);
       let state = stateFromDb.state + 1;
 
