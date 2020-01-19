@@ -6,7 +6,7 @@
     "start": "node src/index.js",
     "watch": "NODE_ENV=dev node_modules/.bin/nodemon src/index.js",
     "test": "NODE_ENV=test jest --verbose --runInBand",
-    "start:test":"NODE_ENV=test node src/index.js"
+    "start:test":"NODE_ENV=e2e_test node src/index.js"
   },
   "license": "MIT",
   "dependencies": {

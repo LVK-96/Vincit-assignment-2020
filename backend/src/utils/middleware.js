@@ -28,9 +28,10 @@ const tokenExtractor = (request, response, next) => {
 };
 
 const requestLogger = (request, response, next) => {
-  logger.info('Method:', request.method);
-  logger.info('Path:  ', request.path);
-  logger.info('Body:  ', request.body);
+  logger.info('Method:      ', request.method);
+  logger.info('Path:        ', request.path);
+  logger.info('Body:        ', request.body);
+  logger.info('Authorization', request.token);
   logger.info('---');
   next();
 };

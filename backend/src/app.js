@@ -33,16 +33,18 @@ GameState.find({})
 const app = express();
 app.use(cors({ maxAge: 600 }));
 app.use(middleware.tokenExtractor);
-app.use(middleware.requestLogger);
 app.use(bodyParser.json());
-app.use('/users', usersRouter);
-app.use('/game', gameRouter);
+app.use(middleware.requestLogger);
 
-// In test environments expose /test/reset endpoint to clear database
-if (config.NODE_ENV === 'test') {
+// In e2e test environment expose /test/reset endpoint to reset db
+if (config.NODE_ENV === 'e2e_test') {
   const testResetRouter = require('./controllers/testReset');
   app.use('/test', testResetRouter);
 }
+
+app.use('/users', usersRouter);
+app.use('/game', gameRouter);
+
 
 app.use(middleware.errorHandler);
 
