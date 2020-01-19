@@ -22,7 +22,7 @@ Builds the app for production.
 
 Starts cypress for e2e tests. To run e2e tests make sure that you have the frontend and backend running.
 
-## Dev environment setup
+## Dev Environment Setup
 
 ##### Pre-requisites
 * [NodeJS](https://nodejs.org/en/)
@@ -36,7 +36,7 @@ yarn start # serve frontend
 yarn start:e2e # requires a local backend
 ```
 
-## Running tests
+## Running Tests
 
 ```bash
 yarn test # integration tests
