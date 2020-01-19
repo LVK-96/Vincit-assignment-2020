@@ -1,7 +1,16 @@
 # Vincit-assignment-2020
 Pre-assignment for Vincit summer internships 2020.
 
-A button game.
+A multiplayer game where each user increments a global counter by clicking a button.
+
+* Every 10th press gets 5 points.
+* Every 100th press gets 40 points.
+* Every 500th press get 250 points.
+
+The users don't know the state of the counter when they press the button.
+After each click a user gets a response with their possible reward and how many clicks there are untill the next reward.
+Every user starts with 20 points, a click decrements the points by 1. Each reward is added to the points.
+The button is clickable only if the user has more than 1 or more points.
 
 Deployed to: https://vincit-game.herokuapp.com/
 
