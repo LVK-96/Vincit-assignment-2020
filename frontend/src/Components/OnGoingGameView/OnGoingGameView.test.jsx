@@ -1,6 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, cleanup, waitForElement, fireEvent } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
+import renderer from 'react-test-renderer';
 import OnGoingGameView from './OnGoingGameView';
 
 jest.mock('../../Services/game.jsx');
@@ -19,4 +20,13 @@ test('renders correctly', () => {
   expect(component.container).toHaveTextContent(
     'Pisteet: '
   );
+});
+
+test('snapshot test', () => {
+  const component = renderer.create(
+    <OnGoingGameView />
+  );
+
+  let tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
 });

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot test 1`] = `
+Array [
+  <div
+    className="message-container"
+    style={
+      Object {
+        "backgroundColor": "white",
+        "color": "white",
+      }
+    }
+  >
+    <div>
+      
+    </div>
+  </div>,
+  <div
+    className="game-container"
+  >
+    <div
+      className="game-button-container"
+    >
+      <button
+        className="game-button"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Pelaa
+      </button>
+    </div>
+    <div
+      className="points-container"
+    >
+      <div
+        className="points"
+      >
+        Pisteet: undefined
+      </div>
+    </div>
+  </div>,
+]
+`;

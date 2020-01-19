@@ -1,4 +1,4 @@
-let savedItems = {}
+let savedItems = {};
 
 const localStorageMock = {
   setItem: (key, item) => {
@@ -6,6 +6,6 @@ const localStorageMock = {
   },
   getItem: (key) => savedItems[key],
   clear: savedItems = {}
-}
+};
 
-Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+Object.defineProperty(window, 'localStorage', { value: localStorageMock });
