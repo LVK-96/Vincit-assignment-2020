@@ -11,7 +11,7 @@ Backend for button game.
 docker-compose up # Start backend and monoDB in development mode
 ```
 
-### Running tests
+## Running Tests
 
 ```bash
 docker-compose -f docker-compose.test.yml run backend yarn test
