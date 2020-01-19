@@ -17,5 +17,13 @@ module.exports = {
   plugins: ['jest'],
   env: {
     jest: true,
+  },
+  rules: {
+    'no-underscore-dangle': 0,
+    'global-require': 0,
+    'consistent-return': 0,
+    'no-plusplus': 0,
+    'no-console': 0,
+    'no-param-reassign': 0,
   }
 };

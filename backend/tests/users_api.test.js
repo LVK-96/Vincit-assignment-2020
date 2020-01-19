@@ -20,7 +20,7 @@ describe('Tests that don`t require a user in the database', () => {
     expect(response.body).toHaveProperty('token');
 
     let users = await User.find({});
-    users = users.map(u => u._id);
+    users = users.map((u) => u._id);
     // https://github.com/facebook/jest/issues/8475#issuecomment-537830532
     expect(JSON.stringify(users[0])).toEqual(JSON.stringify(response.body.id));
   });

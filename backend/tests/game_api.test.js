@@ -79,7 +79,6 @@ describe('Tests that require multiples users in the database', () => {
     await User.deleteMany({});
     const promises = [];
     const numUsers = 25;
-    lastUserI = numUsers - 1;
     for (let i = 0; i < numUsers; i++) {
       const userToSave = new User();
       const newUser = userToSave.save();
