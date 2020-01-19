@@ -21,6 +21,6 @@ test('snapshot test', () => {
     <NewGameView />
   );
 
-  let tree = component.toJSON();
+  const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

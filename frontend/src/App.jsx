@@ -10,11 +10,13 @@ function App() {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
+
     /*
-     * Bare mongodb object id was not random enough => it would allow for easy guessing attacks.
-     * Instead we encode the id in a JSON web token.
+     * The user id that is used to authorize a user to play the game is encoded in JSON web token.
      * The backend decodes the token and uses the id to find corresponding points.
+     * We could also use just use the plain id for this but it is easily guessable by other users.
      */
+
     const tokenFromStorage = localStorage.getItem('token');
     const idFromStorage = localStorage.getItem('id');
     if (tokenFromStorage && idFromStorage) {

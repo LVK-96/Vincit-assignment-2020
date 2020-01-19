@@ -1,5 +1,6 @@
 let savedItems = {};
 
+// Mock localStorage
 const localStorageMock = {
   setItem: (key, item) => {
     savedItems[key] = item
