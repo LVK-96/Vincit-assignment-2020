@@ -24,7 +24,7 @@ Deployed to: https://vincit-game.herokuapp.com/
 
 ### Pre-requisites
 
-* Setup dev environments for both the frontend and backend. Refer to READMEs.
+* Setup dev environments for both the frontend and backend. Refer to the respective READMEs.
 
 ```bash
 cd backend
