@@ -27,7 +27,7 @@ describe('Tests that require a single user in the database', () => {
 
   test(`play returns 0 reward and 9 clicks untill next win on first click
         and state is incremented by 1`, async () => {
-    const response = await api.post('/game/play')
+    const response = await api.post('/api/game/play')
       .set('Authorization', `bearer ${testUser.token}`)
       .expect(200);
     expect(response.body).toHaveProperty('reward', 0);
@@ -39,27 +39,27 @@ describe('Tests that require a single user in the database', () => {
 
   test('play returns 403 if user has 0 points', async () => {
     await User.findByIdAndUpdate(testUser.id, { points: 0 });
-    await api.post('/game/play')
+    await api.post('/api/game/play')
       .set('Authorization', `bearer ${testUser.token}`)
       .expect(403);
   });
 
   test('play returns 404 for no mathcing game for token', async () => {
     await User.findByIdAndDelete(testUser.id);
-    await api.post('/game/play')
+    await api.post('/api/game/play')
       .set('Authorization', `bearer ${testUser.token}`)
       .expect(404);
   });
 
   test('play returns 401 for unauthorized user (no token)', async () => {
     await User.findByIdAndDelete(testUser.id);
-    await api.post('/game/play')
+    await api.post('/api/game/play')
       .expect(401);
   });
 
   test('play returns 401 for unauthorized user (wrong token)', async () => {
     await User.findByIdAndDelete(testUser.id);
-    await api.post('/game/play')
+    await api.post('/api/game/play')
       .set('Authorization', 'bearer wronk')
       .expect(401);
   });
@@ -99,13 +99,13 @@ describe('Tests that require multiples users in the database', () => {
   test('play returns 5 reward and 10 clicks untill next win on 10th click', async () => {
     let responses = [];
     for (let i = 0; i < 9; i++) {
-      responses.push(api.post('/game/play')
+      responses.push(api.post('/api/game/play')
         .set('Authorization', `bearer ${testUsers[i % testUsers.length].token}`)
         .expect(200));
     }
 
     responses = await Promise.all(responses);
-    const response = await api.post('/game/play')
+    const response = await api.post('/api/game/play')
       .set('Authorization', `bearer ${testUser.token}`)
       .expect(200);
     expect(response.body).toHaveProperty('reward', 5);
@@ -118,13 +118,13 @@ describe('Tests that require multiples users in the database', () => {
   test('play returns 40 reward and 10 clicks untill next win on 100th click', async () => {
     let responses = [];
     for (let i = 0; i < 99; i++) {
-      responses.push(api.post('/game/play')
+      responses.push(api.post('/api/game/play')
         .set('Authorization', `bearer ${testUsers[i % testUsers.length].token}`)
         .expect(200));
     }
 
     responses = await Promise.all(responses);
-    const response = await api.post('/game/play')
+    const response = await api.post('/api/game/play')
       .set('Authorization', `bearer ${testUser.token}`)
       .expect(200);
     expect(response.body).toHaveProperty('reward', 40);
@@ -138,13 +138,13 @@ describe('Tests that require multiples users in the database', () => {
         and state wraps around to 0`, async () => {
     let responses = [];
     for (let i = 0; i < 499; i++) {
-      responses.push(api.post('/game/play')
+      responses.push(api.post('/api/game/play')
         .set('Authorization', `bearer ${testUsers[i % testUsers.length].token}`)
         .expect(200));
     }
 
     responses = await Promise.all(responses);
-    const response = await api.post('/game/play')
+    const response = await api.post('/api/game/play')
       .set('Authorization', `bearer ${testUser.token}`)
       .expect(200);
     expect(response.body).toHaveProperty('reward', 250);

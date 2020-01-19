@@ -12,7 +12,7 @@ describe('Tests that don`t require a user in the database', () => {
   });
 
   test('user creation returns points, id and token and user is found from db', async () => {
-    const response = await api.post('/users')
+    const response = await api.post('/api/users')
       .expect(201)
       .expect('Content-Type', /application\/json/);
     expect(response.body).toHaveProperty('id');
@@ -37,7 +37,7 @@ describe('Tests that require a user in the database', () => {
   });
 
   test('authorized user read returns id and points', async () => {
-    const response = await api.get(`/users/${testUser.id}`)
+    const response = await api.get(`/api/users/${testUser.id}`)
       .set('Authorization', `bearer ${testUser.token}`)
       .expect(200)
       .expect('Content-Type', /application\/json/);
@@ -47,24 +47,24 @@ describe('Tests that require a user in the database', () => {
 
   test('user read by non-existing id returns 404', async () => {
     await User.findByIdAndDelete(testUser.id);
-    await api.get(`/users/${testUser.id}`)
+    await api.get(`/api/users/${testUser.id}`)
       .set('Authorization', `bearer ${testUser.token}`)
       .expect(404);
   });
 
   test('unauthorized (wrong token) user read returns 401', async () => {
-    await api.get(`/users/${testUser.id}`)
+    await api.get(`/api/users/${testUser.id}`)
       .set('Authorization', 'bearer wronk')
       .expect(401);
   });
 
   test('unauthorized (no token) user read returns 401', async () => {
-    await api.get(`/users/${testUser.id}`)
+    await api.get(`/api/users/${testUser.id}`)
       .expect(401);
   });
 
   test('authorized points reset returns id and 20 points', async () => {
-    const response = await api.put(`/users/${testUser.id}/reset`)
+    const response = await api.put(`/api/users/${testUser.id}/reset`)
       .set('Authorization', `bearer ${testUser.token}`)
       .expect(200)
       .expect('Content-Type', /application\/json/);
@@ -74,19 +74,19 @@ describe('Tests that require a user in the database', () => {
 
   test('user reset by non-existing id returns 404', async () => {
     await User.findByIdAndDelete(testUser.id);
-    await api.put(`/users/${testUser.id}/reset`)
+    await api.put(`/api/users/${testUser.id}/reset`)
       .set('Authorization', `bearer ${testUser.token}`)
       .expect(404);
   });
 
   test('unauthorized (wrong token) points reset returns 401', async () => {
-    await api.put(`/users/${testUser.id}/reset`)
+    await api.put(`/api/users/${testUser.id}/reset`)
       .set('Authorization', 'bearer wronk')
       .expect(401);
   });
 
   test('unauthorized (no token) points reset returns 401', async () => {
-    await api.put(`/users/${testUser.id}/reset`)
+    await api.put(`/api/users/${testUser.id}/reset`)
       .expect(401);
   });
 });
