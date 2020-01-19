@@ -1,0 +1,17 @@
+version: "3"
+services:
+  mongo:
+      container_name: mongo
+      image: mongo
+      ports:
+        - "27017:27017"
+  backend:
+    container_name: "vincit-2020-backend"
+    build: .
+    command: yarn start:test
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./:/app"
+    depends_on:
+      - "mongo"

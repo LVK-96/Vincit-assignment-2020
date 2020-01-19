@@ -15,7 +15,7 @@ describe('Tests that require a single user in the database', () => {
     await GameState.deleteMany({});
     const gameStateToSave = new GameState();
     const savedState = await gameStateToSave.save();
-    gameStateId =savedState._id;
+    gameStateId = savedState._id;
     setGameStateId(savedState._id);
 
     await User.deleteMany({});

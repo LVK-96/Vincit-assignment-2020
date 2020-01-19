@@ -1,10 +1,12 @@
 const dotenv = require('dotenv');
 
-if (process.env.VINCIT_SUMMER_2020_DEV) {
+if (process.env.NODE_ENV === 'dev') {
   // Use local development config
   dotenv.config({ path: '.env.development' });
+} else if (process.env.NODE_ENV === 'test') {
+  // Test config
+  dotenv.config({ path: '.env.test' });
 } else {
-  // Production config
   dotenv.config();
 }
 
