@@ -3,7 +3,7 @@ Pre-assignment for Vincit summer internships 2020.
 
 A button game.
 
-Deployed to "links here"
+Deployed to: https://vincit-game.herokuapp.com/
 
 ## Stack
 
