@@ -15,7 +15,7 @@
     "start": "REACT_APP_DEV=true react-scripts start",
     "start:e2e": "REACT_APP_E2E=true react-scripts start",
     "test": "react-scripts test",
-    "build": "REACT_APP_BACKEND_URI=/api react-scripts build",
+    "build": "react-scripts build",
     "cypress:open": "cypress open"
   },
   "eslintConfig": {
