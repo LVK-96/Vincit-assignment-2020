@@ -31,9 +31,9 @@ Starts cypress for e2e tests. To run e2e tests make sure that you have the front
 ```bash
 git clone https://github.com/LVK-96/Vincit-assignment-2020 && cd Vincit-assignment-2020
 cd frontend && yarn install
-yarn start # serve frontend
+yarn start # serve frontend, api requests are mocked
 # OR
-yarn start:e2e # requires a local backend
+yarn start:e2e # requires a local backend running at port 8000
 ```
 
 ## Running Tests
