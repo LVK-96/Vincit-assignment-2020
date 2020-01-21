@@ -4,7 +4,7 @@ Backend for button game.
 
 ### Pre-requisites
 
-* [Docker](https://docs.docker.com/install/)
+* [Docker](https://docs.docker.com/get-docker/)
 * [docker-compose](https://docs.docker.com/compose/install/)
 
 ```bash
