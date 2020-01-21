@@ -12,7 +12,9 @@ After each click, a user gets a response with their possible reward and how many
 Every user starts with 20 points and a click decrements the points by 1. Each reward is added to the points.
 The button is clickable only if the user has 1 or more points.
 
-Deployed to: https://vincit-game.herokuapp.com/
+Deployed to heroku:
+* Frontend: https://vincit-game-frontend.herokuapp.com/
+* Backend: https://vincit-game-backend.herokuapp.com/
 
 ## Stack
 
